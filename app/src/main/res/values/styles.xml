@@ -1,0 +1,14 @@
+<resources>
+
+
+    <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
+        <!-- 配置app自己的theme -->
+        <item name="app_primary_color">?attr/qmui_config_color_blue</item>
+        <item name="app_content_bg_color">@color/qmui_config_color_white</item>
+        <item name="colorPrimary">@color/app_color_blue_2</item>
+        <item name="colorPrimaryDark">@color/app_color_blue</item>
+        <item name="colorAccent">?attr/qmui_config_color_blue</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+    </style>
+
+</resources>
