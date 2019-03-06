@@ -12,6 +12,8 @@ public class HttpFeedBackUtil {
             int code = httpException.code();
             if (code == 500 || code == 404) {
                 callBack.onFailed("服务器出错");
+            }else if (code==401){
+                callBack.onFailed("权限不足");
             }
         } else if (e instanceof ConnectException) {
             callBack.onFailed("网络断开,请打开网络!");
