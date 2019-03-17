@@ -3,9 +3,9 @@ package me.daylight.ktzs.http;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public abstract class HttpObserver<T> implements Observer<T> {
+public class HttpObserver<T> implements Observer<T> {
     private OnHttpCallBack callBack;
-    protected HttpObserver(OnHttpCallBack callBack) {
+    public HttpObserver(OnHttpCallBack callBack) {
         this.callBack=callBack;
     }
 

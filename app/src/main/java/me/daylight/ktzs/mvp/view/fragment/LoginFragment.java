@@ -59,7 +59,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
 
     @Override
     protected void doAfterView() {
-
+        getPresenter().setAccount();
     }
 
     @Override
@@ -78,16 +78,6 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
     }
 
     @Override
-    public void showInfo(String info) {
-        DialogUtil.showTipDialog(getBaseFragmentActivity(), QMUITipDialog.Builder.ICON_TYPE_INFO,info,true);
-    }
-
-    @Override
-    public void showErrorMsg(String msg) {
-        DialogUtil.showTipDialog(getBaseFragmentActivity(), QMUITipDialog.Builder.ICON_TYPE_FAIL,msg,true);
-    }
-
-    @Override
     public void toMain() {
         Intent intent = new Intent(getBaseFragmentActivity(), MainActivity.class);
         startActivity(intent);
@@ -98,7 +88,6 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
     public void setAccount(String phone) {
         account.setText(phone);
     }
-
 
     @OnClick({R.id.main_btn_login,R.id.sign_up,R.id.forget_password})
     public void onViewClicked(View v) {

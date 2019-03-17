@@ -32,4 +32,8 @@
     <color name="software_textColor_selected">#FFDCE0DF</color>
     <color name="software_textColor_unselected">#FFFFFFFF</color>
     <color name="color_f2">#f2f2f2</color>
+    <color name="bar_divider">#D4D6D8</color>
+    <color name="tab_panel_bg">#ffffff</color>
+    <color name="tab_panel_divider">@color/bar_divider</color>
+
 </resources>

@@ -10,7 +10,7 @@ import me.daylight.ktzs.mvp.view.LoginView;
 public class LoginPresenter extends BasePresenter<LoginView, LoginModel> {
     public void login(String account,String password){
         getView().showProgress();
-        new Handler().postDelayed(()-> getModel().login(account, password, new OnHttpCallBack<RetResult>() {
+        new Handler().postDelayed(()-> getModel().login(account, password, new OnHttpCallBack<RetResult<String>>() {
             @Override
             public void onSuccess(RetResult retResult) {
                 getView().toMain();
@@ -22,5 +22,9 @@ public class LoginPresenter extends BasePresenter<LoginView, LoginModel> {
                 getView().showErrorMsg(errorMsg);
             }
         }),2000);
+    }
+
+    public void setAccount(){
+        getView().setAccount(getModel().loadAccount());
     }
 }

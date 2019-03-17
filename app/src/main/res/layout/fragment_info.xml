@@ -17,17 +17,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <me.daylight.talk.customview.GroupListView
-                android:id="@+id/groupList_info"
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                android:id="@+id/info_groupview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/edit_button"
+                android:id="@+id/info_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
@@ -37,25 +37,11 @@
                 android:textSize="18sp"
                 android:background="@drawable/btn_ripple_edit" />
 
-            <TextView
-                android:id="@+id/del_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/delete"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:background="@drawable/btn_ripple_delete" />
         </LinearLayout>
     </ScrollView>
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar_info"
+        android:id="@+id/info_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"

@@ -4,12 +4,15 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import me.daylight.ktzs.app.KTZSApp;
+import me.daylight.ktzs.entity.EventMsg;
+import me.daylight.ktzs.entity.Notice;
 import me.daylight.ktzs.utils.GlobalField;
 import me.daylight.ktzs.utils.SharedPreferencesUtil;
 import okhttp3.OkHttpClient;
@@ -19,14 +22,18 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 public class WsManager extends WebSocketListener {
+    public static final String Channel_SignInCount="signInCount";
+    public static final String Channel_Notice="notice";
+
     private static WsManager mInstance;
-    private WebSocket webSocket;
-    private String phone;
+    private Map<String,WebSocket> webSocketMap;
+    private String idNumber;
     private boolean isConnected;
 
     private WsManager() {
-
-        heartBeatTask.start();
+        webSocketMap=new ConcurrentHashMap<>();
+        idNumber=SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(),
+                GlobalField.USER,"idNumber");
     }
 
     public static WsManager getInstance() {
@@ -40,60 +47,64 @@ public class WsManager extends WebSocketListener {
         return mInstance;
     }
 
-    public void init() {
+    public void init(String channel) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .build();
         String url="ws://"+ SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(),
-                GlobalField.SETTING,GlobalField.URL)+"/webSocketService?phone="+phone;
+                GlobalField.SETTING,GlobalField.URL)+(channel.equals(Channel_SignInCount)?":8080/webSocket/":"/webSocket/")+channel+"/"+idNumber;
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        webSocket=client.newWebSocket(request, this);
+        WebSocket webSocket=client.newWebSocket(request, this);
+        webSocketMap.put(channel,webSocket);
         client.dispatcher().executorService().shutdown();
+        if (channel.equals(Channel_Notice)&&!heartBeatTask.isAlive())
+            heartBeatTask.start();
     }
 
-    public void sendMessage(Map<String,Object> msgMap) {
-        webSocket.send(new Gson().toJson(msgMap));
+    public void disconnect(String channel) {
+        if (mInstance==null||webSocketMap==null)
+            return;
+        if (channel.equals(Channel_Notice)) {
+            heartBeatTask.interrupt();
+            heartBeatTask=null;
+        }
+        if (webSocketMap.containsKey(channel)&&webSocketMap.get(channel)!=null) {
+            Objects.requireNonNull(webSocketMap.get(channel)).close(1000, "close");
+            webSocketMap.remove(channel);
+        }
     }
 
-    public void disconnect() {
-        mInstance = null;
-        if (webSocket != null)
-            webSocket.close(1000, "close");
-        heartBeatTask.interrupt();
-        heartBeatTask=null;
-    }
-
-    private void handleMessage(String msg) {
-
+    public void destroy(){
+        mInstance=null;
+        if (webSocketMap!=null){
+            for (String channel:webSocketMap.keySet())
+                disconnect(channel);
+            webSocketMap=null;
+        }
     }
 
     @Override
     public void onOpen(WebSocket webSocket, Response response) {
         Log.d("onOpen","");
-        webSocket.send("{\"msgType\":102}");
+        if (Objects.equals(getChannel(webSocket), Channel_Notice))
+            webSocket.send("0x00");
     }
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        try {
-            JSONObject jsonObject=new JSONObject(text);
-            if (!jsonObject.has("msgType"))
-                return;
-            switch (jsonObject.getInt("msgType")) {
-                case GlobalField.WebSocket_Type_Message:
-                    handleMessage(jsonObject.getString("msg"));
-                    break;
-                case GlobalField.WebSocket_Type_HeartBeat:
-                    isConnected = true;
-                    break;
-                case GlobalField.WebSocket_Type_Push:
-                    break;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (text.equals("0x01")) {
+            isConnected = true;
+            return;
         }
+        String channel=getChannel(webSocket);
+        if (channel==null)
+            return;
+        if (channel.equals(Channel_SignInCount))
+            EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_SignInCount,Integer.parseInt(text)));
+        else if (channel.equals(Channel_Notice))
+            EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_Notice,new Gson().fromJson(text, Notice.class)));
     }
 
     @Override
@@ -109,22 +120,30 @@ public class WsManager extends WebSocketListener {
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
         Log.d("onFailure", t+"");
-        init();
+    }
+
+    private String getChannel(WebSocket webSocket){
+        for (Map.Entry<String,WebSocket> entry:webSocketMap.entrySet()){
+            if (entry.getValue().equals(webSocket))
+                return entry.getKey();
+        }
+        return null;
     }
 
     private Thread heartBeatTask =new Thread (() -> {
-        while (mInstance != null) {
+        while (mInstance!=null&&webSocketMap.containsKey(Channel_Notice)&&webSocketMap.get(Channel_Notice)!=null) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(30000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            webSocket.send("{\"msgType\":102}");
+            if (webSocketMap!=null)
+                Objects.requireNonNull(webSocketMap.get(Channel_Notice)).send("0x00");
             if (isConnected) {
                 isConnected=false;
                 continue;
             }
-            init();
+            init(Channel_Notice);
         }
     });
 }

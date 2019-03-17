@@ -1,5 +1,7 @@
 package me.daylight.ktzs.http;
 
+import java.util.concurrent.TimeUnit;
+
 import me.daylight.ktzs.http.interceptor.AddCookiesInterceptor;
 import me.daylight.ktzs.http.interceptor.HeadInterceptor;
 import me.daylight.ktzs.http.interceptor.ReceivedCookiesInterceptor;
@@ -18,6 +20,7 @@ public class RetrofitUtils {
         OkHttpClient client=builder.addInterceptor(new HeadInterceptor())
                 .addInterceptor(new ReceivedCookiesInterceptor())
                 .addInterceptor(new AddCookiesInterceptor())
+                .connectTimeout(8, TimeUnit.SECONDS)
                 .build();
 
         mRetrofit = new Retrofit.Builder()

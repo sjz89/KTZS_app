@@ -8,6 +8,7 @@ import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.arch.QMUIFragmentActivity;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIKeyboardHelper;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.lang.ref.WeakReference;
 
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import me.daylight.ktzs.mvp.presenter.BasePresenter;
 import me.daylight.ktzs.mvp.view.BaseView;
+import me.daylight.ktzs.utils.DialogUtil;
 
 
 public abstract class BaseFragment<P extends BasePresenter> extends QMUIFragment implements BaseView {
@@ -51,6 +53,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends QMUIFragment
 
     // 由子类去实现创建
     protected abstract P createPresenter();
+
+    @Override
+    public void showInfo(int type,String info) {
+        DialogUtil.showTipDialog(getBaseFragmentActivity(), type,info,true);
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg){
+        DialogUtil.showTipDialog(getCurContext(), QMUITipDialog.Builder.ICON_TYPE_FAIL,errorMsg,true);
+    }
 
     @Override
     public void onDestroy() {

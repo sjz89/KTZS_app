@@ -1,0 +1,37 @@
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:background="@color/qmui_config_color_white">
+
+        <com.qmuiteam.qmui.widget.QMUITabSegment
+            android:id="@+id/viewpager_tab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/tab_panel_bg"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fitsSystemWindows="true"/>
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/viewpager_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_bg_color="@color/app_color_blue_2"
+        app:qmui_topbar_subtitle_color="@color/white"
+        app:qmui_topbar_title_color="@color/white" />
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

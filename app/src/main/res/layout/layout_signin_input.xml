@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/signin_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:autoLink="all"
+            android:background="@drawable/radius_signin_bg"
+            android:imeOptions="actionSend"
+            android:inputType="textMultiLine"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="3"
+            android:minHeight="36dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="6dp"
+            android:textSize="16sp"
+            tools:ignore="Autofill,LabelFor" />
+
+        <ImageView
+            android:id="@+id/signin_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_icon_scan" />
+
+</RelativeLayout>

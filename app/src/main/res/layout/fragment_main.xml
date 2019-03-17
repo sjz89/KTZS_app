@@ -3,20 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qmuiteam.qmui.widget.QMUIViewPager
-        android:id="@+id/pager"
-        android:background="?attr/app_content_bg_color"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/home_tab_height"/>
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/qmui_config_color_background"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
-    <com.qmuiteam.qmui.widget.QMUITabSegment
-        android:id="@+id/tabs"
-        android:layout_gravity="bottom"
-        android:background="?attr/qmui_list_item_bg_with_border_top"
-        android:textSize="12sp"
-        app:qmui_tab_icon_position="top"
+        <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+            android:id="@+id/main_grouplist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/main_topbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/home_tab_height"/>
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_bg_color="@color/app_color_blue_2"
+        app:qmui_topbar_subtitle_color="@color/white"
+        app:qmui_topbar_title_color="@color/white" />
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
