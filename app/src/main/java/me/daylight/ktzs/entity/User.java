@@ -1,4 +1,4 @@
-package me.daylight.ktzs.model.entity;
+package me.daylight.ktzs.entity;
 
 public class User {
     private Long id;
@@ -9,7 +9,7 @@ public class User {
 
     private String phone;
 
-    private String password;
+    private String role;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
