@@ -1,5 +1,7 @@
 package me.daylight.ktzs.mvp.view.fragment;
 
+import android.content.Intent;
+
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -21,6 +23,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
 
     @BindView(R.id.main_topbar)
     QMUITopBarLayout topBar;
+
+    private QMUICommonListItemView info;
 
     @Override
     public TransitionConfig onFetchTransitionConfig() {
@@ -63,7 +67,7 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
 
     @Override
     public void initMenu(User user) {
-        QMUICommonListItemView info= new CommonListItemView(getCurContext(),user.getRole().equals("student")?R.drawable.ic_student:R.drawable.ic_teacher,128,128,
+        info= new CommonListItemView(getCurContext(),user.getRole().equals("student")?R.drawable.ic_student:R.drawable.ic_teacher,128,128,
                 QMUICommonListItemView.VERTICAL,QMUICommonListItemView.ACCESSORY_TYPE_CHEVRON);
         info.setText(user.getName());
         info.getTextView().setTextSize(20);
@@ -100,7 +104,7 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
         setting.setText("设置");
 
         QMUIGroupListView.newSection(getCurContext())
-                .addItemView(info,v -> startFragment(new InfoFragment()))
+                .addItemView(info,v -> startFragmentForResult(new InfoFragment(),0x01))
                 .addTo(groupView);
 
         if (user.getRole().equals("student"))
@@ -146,5 +150,9 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
         startFragment(new StartSignInFragment());
     }
 
-
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode==0x01&&resultCode==1)
+            info.setText(data.getStringExtra("name"));
+    }
 }

@@ -1,6 +1,7 @@
 package me.daylight.ktzs.mvp.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -37,6 +38,8 @@ public class InfoFragment extends BaseFragment<InfoPresenter> implements InfoVie
 
     private EditText phoneEdit;
 
+    private boolean isEdited;
+
     @Override
     protected int initLayoutId() {
         return R.layout.fragment_info;
@@ -44,6 +47,7 @@ public class InfoFragment extends BaseFragment<InfoPresenter> implements InfoVie
 
     @Override
     protected void doAfterView() {
+        isEdited=false;
         topBar.setTitle(R.string.info);
         topBar.addLeftBackImageButton().setOnClickListener(v -> popBackStack());
         editable(false);
@@ -98,6 +102,7 @@ public class InfoFragment extends BaseFragment<InfoPresenter> implements InfoVie
         if (((TextView)v).getText().toString().equals(getString(R.string.edit))) {
             editable(true);
         }else if (((TextView)v).getText().toString().equals(getString(R.string.save))) {
+            isEdited=true;
             getPresenter().saveInfo(nameEdit.getText().toString(),phoneEdit.getText().toString());
         }
     }
@@ -110,5 +115,15 @@ public class InfoFragment extends BaseFragment<InfoPresenter> implements InfoVie
         editText.setTextColor(QMUIResHelper.getAttrColor(context,R.attr.qmui_config_color_gray_5));
         editText.setBackgroundColor(context.getColor(R.color.transparent));
         return editText;
+    }
+
+    @Override
+    protected void popBackStack() {
+        if (isEdited) {
+            Intent intent = new Intent();
+            intent.putExtra("name", nameEdit.getText().toString());
+            this.setFragmentResult(1, intent);
+        }
+        super.popBackStack();
     }
 }
