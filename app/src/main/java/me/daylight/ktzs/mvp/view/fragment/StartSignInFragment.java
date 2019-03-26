@@ -83,7 +83,7 @@ public class StartSignInFragment extends BaseFragment<StartSignInPresenter> impl
         QMUIGroupListView.newSection(getCurContext())
                 .addItemView(uniqueIdItem,null)
                 .addItemView(remainTimeItem,null)
-                .addItemView(countItem,null)
+                .addItemView(countItem,v -> startFragment(new SignInDetailFragment()))
                 .addTo(groupView);
     }
 
@@ -110,12 +110,6 @@ public class StartSignInFragment extends BaseFragment<StartSignInPresenter> impl
         stopBtn.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onDestroyView() {
-        getPresenter().stopCountDown();
-        super.onDestroyView();
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateCount(EventMsg msg){
         if (msg.getEventChannel()==GlobalField.Event_Channel_SignInCount)
@@ -130,6 +124,7 @@ public class StartSignInFragment extends BaseFragment<StartSignInPresenter> impl
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getPresenter().stopCountDown();
         WsManager.getInstance().disconnect(WsManager.Channel_SignInCount);
         EventBus.getDefault().unregister(this);
     }

@@ -10,6 +10,9 @@ public class GlobalField {
 
     public static final String URL="url";
 
+    public static final int REQUEST_CODE_CHOOSE=100;
+
+    public static final int Event_Channel_SignInDetail=0x00;
     public static final int Event_Channel_SignInCount=0x01;
     public static final int Event_Channel_Notice=0x02;
 

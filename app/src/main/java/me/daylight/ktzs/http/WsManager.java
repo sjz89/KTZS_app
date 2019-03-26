@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.Objects;
@@ -101,8 +103,15 @@ public class WsManager extends WebSocketListener {
         String channel=getChannel(webSocket);
         if (channel==null)
             return;
-        if (channel.equals(Channel_SignInCount))
-            EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_SignInCount,Integer.parseInt(text)));
+        if (channel.equals(Channel_SignInCount)) {
+            try {
+                JSONObject jsonObject=new JSONObject(text);
+                EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_SignInCount,jsonObject.getInt("count")));
+                EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_SignInDetail,text));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         else if (channel.equals(Channel_Notice))
             EventBus.getDefault().post(new EventMsg(GlobalField.Event_Channel_Notice,new Gson().fromJson(text, Notice.class)));
     }

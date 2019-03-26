@@ -195,16 +195,38 @@ public class CourseDetailFragment extends BaseFragment<CourseDetailPresenter> im
         QMUICommonListItemView content=itemView.createItemView("通知内容");
         content.setDetailText(notice.getContent());
 
+        View.OnClickListener listener=v->startFragment(new NoticeFragment());
+
         QMUIGroupListView.newSection(getCurContext())
                 .setTitle("最新通知")
-                .addItemView(time,null)
-                .addItemView(content,null)
+                .addItemView(time,listener)
+                .addItemView(content,listener)
+                .addTo(itemView);
+    }
+
+    @Override
+    public void initNoticeFailed(String msg) {
+        QMUICommonListItemView none=itemView.createItemView(msg);
+
+        QMUIGroupListView.newSection(getCurContext())
+                .setTitle("最新通知")
+                .addItemView(none,null)
+                .addTo(itemView);
+    }
+
+    @Override
+    public void initRecordFailed(String msg) {
+        QMUICommonListItemView none=itemView.createItemView(msg);
+
+        QMUIGroupListView.newSection(getCurContext())
+                .setTitle("最近签到")
+                .addItemView(none,null)
                 .addTo(itemView);
     }
 
     @Override
     public void initRecyclerView(List<CommonData> userList) {
-        CommonAdapter adapter = new CommonAdapter(getCurContext(), QMUICommonListItemView.HORIZONTAL, QMUICommonListItemView.ACCESSORY_TYPE_NONE);
+        CommonAdapter adapter = new CommonAdapter(getCurContext(), QMUICommonListItemView.VERTICAL, QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         adapter.setData(userList);
         adapter.setOnCommonItemClickListener((view, position) -> {
             userInfoViewModel.setIdNumber(userList.get(position).getSubText());
@@ -219,7 +241,7 @@ public class CourseDetailFragment extends BaseFragment<CourseDetailPresenter> im
 
     @Override
     public void hideLoading() {
-        emptyView.hide();
+        new Handler().postDelayed(()->emptyView.hide(),1000);
     }
 
     @Override
@@ -266,6 +288,12 @@ public class CourseDetailFragment extends BaseFragment<CourseDetailPresenter> im
         viewPager.setCurrentItem(0,false);
         tabSegment.setupWithViewPager(viewPager, false);
         tabSegment.setMode(QMUITabSegment.MODE_FIXED);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        courseViewModel.setCourse(null);
     }
 
     enum Pager {

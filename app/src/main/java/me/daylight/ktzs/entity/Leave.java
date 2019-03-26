@@ -7,15 +7,19 @@ package me.daylight.ktzs.entity;
 public class Leave {
     private Long id;
 
-    private Long courseId;
+    private String studentName;
 
-    private Long studentId;
+    private String startDate;
 
-    private int state;
+    private String endDate;
+
+    private Integer state;
 
     private String reason;
 
     private String remark;
+
+    private String time;
 
     public Long getId() {
         return id;
@@ -25,27 +29,35 @@ public class Leave {
         this.id = id;
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public int getState() {
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -63,5 +75,13 @@ public class Leave {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

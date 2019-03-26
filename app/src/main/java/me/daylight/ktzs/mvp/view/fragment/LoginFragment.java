@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -26,7 +25,6 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import me.daylight.ktzs.R;
 import me.daylight.ktzs.activity.MainActivity;
-import me.daylight.ktzs.utils.DialogUtil;
 import me.daylight.ktzs.utils.GlobalField;
 import me.daylight.ktzs.utils.SharedPreferencesUtil;
 import me.daylight.ktzs.mvp.presenter.LoginPresenter;
@@ -89,7 +87,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
         account.setText(phone);
     }
 
-    @OnClick({R.id.main_btn_login,R.id.sign_up,R.id.forget_password})
+    @OnClick(R.id.main_btn_login)
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.main_btn_login:
@@ -103,13 +101,10 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
                     mBtnLogin.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha));
                 }
                 break;
-            case R.id.sign_up:
-//                startFragment(new RegisterFragment());
-                break;
         }
     }
 
-    @OnClick(R.id.forget_password)
+    @OnClick(R.id.logo)
     public void setUrl(){
         QMUIDialog.EditTextDialogBuilder builder=new QMUIDialog.EditTextDialogBuilder(getCurContext());
         builder.setTitle("Url")

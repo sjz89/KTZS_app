@@ -11,6 +11,8 @@ public class User {
 
     private String role;
 
+    private Boolean isLeave;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Boolean isLeave() {
+        return isLeave;
+    }
+
+    public void setLeave(Boolean isLeave) {
+        this.isLeave = isLeave;
     }
 }

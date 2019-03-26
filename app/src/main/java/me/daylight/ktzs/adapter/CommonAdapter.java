@@ -71,6 +71,11 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonView
         setHasStableIds(true);
     }
 
+    public void addData(CommonData commonData){
+        data.add(commonData);
+        notifyItemInserted(data.size()-1);
+    }
+
     public void setData(List<CommonData> data){
         this.data=data;
         notifyDataSetChanged();
@@ -129,13 +134,14 @@ public class CommonAdapter extends RecyclerView.Adapter<CommonAdapter.CommonView
         CommonViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this,view);
+            itemView.getTextView().setMaxLines(1);
         }
 
         void initTextView(Context context,String text){
             TextView textView=new TextView(context);
             textView.setWidth(QMUIDisplayHelper.dp2px(context,150));
             textView.setGravity(Gravity.END);
-            textView.setTextSize(15);
+            textView.setTextSize(14);
             textView.setTextColor(QMUIResHelper.getAttrColor(context,R.attr.qmui_config_color_gray_5));
             textView.setText(text);
             itemView.addAccessoryCustomView(textView);

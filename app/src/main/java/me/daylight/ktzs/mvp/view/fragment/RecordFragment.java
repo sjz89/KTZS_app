@@ -8,6 +8,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,9 @@ import me.daylight.ktzs.adapter.CommonAdapter;
 import me.daylight.ktzs.entity.CommonData;
 import me.daylight.ktzs.mvp.presenter.RecordPresenter;
 import me.daylight.ktzs.mvp.view.RecordView;
+import me.daylight.ktzs.utils.GlobalField;
+import me.daylight.ktzs.utils.SharedPreferencesUtil;
+import me.daylight.ktzs.viewmodel.TeacherRecordViewModel;
 
 /**
  * @author Daylight
@@ -47,9 +51,15 @@ public class RecordFragment extends BaseFragment<RecordPresenter> implements Rec
         topBar.setTitle(R.string.record);
         topBar.addLeftBackImageButton().setOnClickListener(v -> popBackStack());
         refreshLayout.setColorSchemeResources(R.color.aqua,R.color.grass,R.color.grapefruit);
-        refreshLayout.setOnRefreshListener(()-> new Handler().postDelayed(()->getPresenter().swipeToRefresh(),1500));
+        String uniqueId=null;
+        if (SharedPreferencesUtil.getString(getCurContext(), GlobalField.USER,"role").equals("teacher")){
+            TeacherRecordViewModel viewModel= ViewModelProviders.of(getBaseFragmentActivity()).get(TeacherRecordViewModel.class);
+            uniqueId=viewModel.getUniqueId();
+        }
+        String finalUniqueId = uniqueId;
+        refreshLayout.setOnRefreshListener(()-> new Handler().postDelayed(()->getPresenter().swipeToRefresh(finalUniqueId),1500));
         emptyView.show(true);
-        getPresenter().initRecyclerView();
+        getPresenter().initRecyclerView(uniqueId);
     }
 
     @Override
@@ -75,7 +85,7 @@ public class RecordFragment extends BaseFragment<RecordPresenter> implements Rec
 
     @Override
     public void hideLoading() {
-        emptyView.hide();
+        new Handler().postDelayed(()->emptyView.hide(),1000);
     }
 
     @Override

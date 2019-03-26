@@ -8,6 +8,7 @@ import me.daylight.ktzs.http.OnHttpCallBack;
 import me.daylight.ktzs.http.RetResult;
 import me.daylight.ktzs.http.RetrofitUtils;
 import me.daylight.ktzs.utils.GlobalField;
+import me.daylight.ktzs.utils.IMEIUtil;
 import me.daylight.ktzs.utils.SharedPreferencesUtil;
 
 public class LoginModel extends BaseModel {
@@ -23,7 +24,7 @@ public class LoginModel extends BaseModel {
     public void login(String account, String password, OnHttpCallBack<RetResult<String>> callBack){
         RetrofitUtils.newInstance(GlobalField.url)
                 .create(HttpContract.class)
-                .login(account,password)
+                .login(IMEIUtil.getIMEI(getContext()),account,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpObserver<RetResult<String>>(callBack) {
@@ -35,5 +36,14 @@ public class LoginModel extends BaseModel {
                         SharedPreferencesUtil.putValue(getContext(),GlobalField.USER,"role",retResult.getData());
                     }
                 });
+    }
+
+    public void deviceReplace(String idNumber,OnHttpCallBack<RetResult> callBack){
+        RetrofitUtils.newInstance(GlobalField.url)
+                .create(HttpContract.class)
+                .deviceReplace(IMEIUtil.getIMEI(getContext()),idNumber)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpObserver<RetResult>(callBack) {});
     }
 }

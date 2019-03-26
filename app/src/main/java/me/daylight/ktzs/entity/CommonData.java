@@ -1,8 +1,6 @@
 package me.daylight.ktzs.entity;
 
 
-import android.view.View;
-
 /**
  * @author Daylight
  * @date 2019/03/10 22:17

@@ -4,41 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/qmui_config_color_background"
-        android:fillViewport="true"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/leave_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
-                android:id="@+id/leave_groupview"
+            <com.qmuiteam.qmui.widget.section.QMUIStickySectionLayout
+                android:id="@+id/leave_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/qmui_topbar_height"
+                android:background="@color/qmui_config_color_background"
+                android:fitsSystemWindows="true"/>
 
-            <TextView
-                android:id="@+id/leave_submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="12dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/submit"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:background="@drawable/btn_ripple_edit" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        </LinearLayout>
-    </ScrollView>
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/leave_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_background" />
+
+    </FrameLayout>
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/leave_topbar"

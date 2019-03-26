@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="1dp"
+    android:padding="4dp"
+    android:elevation="1dp">
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
+        android:id="@+id/leave_note_date_range"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"/>
+
+    <com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView
+        android:id="@+id/leave_note_time"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/radius_signin_bg"
+        android:elevation="1dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:background="@color/qmui_config_color_10_pure_black"
+            android:textSize="15sp"
+            android:textColor="@color/qmui_config_color_gray_1"
+            android:text="@string/leave_reason" />
+
+        <TextView
+            android:id="@+id/leave_note_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/leave_note_remark_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/radius_signin_bg"
+        android:elevation="1dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:background="@color/qmui_config_color_10_pure_black"
+            android:textSize="15sp"
+            android:textColor="@color/qmui_config_color_gray_1"
+            android:text="@string/leave_remark" />
+
+        <TextView
+            android:id="@+id/leave_note_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

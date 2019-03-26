@@ -4,4 +4,8 @@
     <item name="login" type="id"/>
 
     <item name="send" type="id"/>
+    <item name="leave" type="id"/>
+    <item name="publish" type="id"/>
+    <item name="upload" type="id"/>
+    <item name="download" type="id"/>
 </resources>

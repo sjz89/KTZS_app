@@ -17,6 +17,10 @@ public interface CourseDetailView extends BaseView {
 
     void initLatestNotice(Notice notice);
 
+    void initNoticeFailed(String msg);
+
+    void initRecordFailed(String msg);
+
     void initRecyclerView(List<CommonData> userList);
 
     void hideLoading();

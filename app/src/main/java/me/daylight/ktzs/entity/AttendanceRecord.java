@@ -9,6 +9,8 @@ public class AttendanceRecord {
 
     private String courseName;
 
+    private String studentName;
+
     private int state;
 
     private String time;
@@ -19,6 +21,14 @@ public class AttendanceRecord {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getCourseName() {

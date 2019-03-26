@@ -44,7 +44,7 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailView, Cours
 
             @Override
             public void onFailed(String errorMsg) {
-                getView().showErrorMsg(errorMsg);
+                getView().initNoticeFailed(errorMsg);
             }
         });
 
@@ -56,7 +56,7 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailView, Cours
 
             @Override
             public void onFailed(String errorMsg) {
-                getView().showErrorMsg(errorMsg);
+                getView().initRecordFailed(errorMsg);
             }
         });
     }
@@ -68,6 +68,7 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailView, Cours
                 List<CommonData> commonDataList=new ArrayList<>();
                 for (User user:listRetResult.getData()){
                     CommonData commonData=new CommonData(null,user.getName(),user.getIdNumber(),user.getId());
+                    commonData.setCustomText(user.isLeave()?"请假":"");
                     commonDataList.add(commonData);
                 }
                 getView().initRecyclerView(commonDataList);
@@ -88,6 +89,7 @@ public class CourseDetailPresenter extends BasePresenter<CourseDetailView, Cours
                 List<CommonData> commonDataList=new ArrayList<>();
                 for (User user:listRetResult.getData()){
                     CommonData commonData=new CommonData(null,user.getName(),user.getIdNumber(),user.getId());
+                    commonData.setCustomText(user.isLeave()?"请假":"");
                     commonDataList.add(commonData);
                 }
                 getView().initRecyclerView(commonDataList);

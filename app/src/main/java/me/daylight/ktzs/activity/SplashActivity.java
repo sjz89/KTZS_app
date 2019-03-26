@@ -14,6 +14,7 @@ import me.daylight.ktzs.http.OnHttpCallBack;
 import me.daylight.ktzs.http.RetResult;
 import me.daylight.ktzs.http.RetrofitUtils;
 import me.daylight.ktzs.utils.GlobalField;
+import me.daylight.ktzs.utils.IMEIUtil;
 import me.daylight.ktzs.utils.SharedPreferencesUtil;
 
 import android.Manifest;
@@ -27,7 +28,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -36,9 +39,11 @@ public class SplashActivity extends AppCompatActivity {
     private String[] mPermission = new String[] {
             Manifest.permission.INTERNET,
             Manifest.permission.CAMERA,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE
     };
 
     private List<String> mRequestPermission = new ArrayList<>();
@@ -53,7 +58,12 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        GlideApp.with(this).load(R.drawable.splash).centerCrop().into(imageView);
+
+        if (isDayTime())
+            GlideApp.with(this).load(R.mipmap.good_morning_img).centerCrop().into(imageView);
+        else
+            GlideApp.with(this).load(R.mipmap.good_night_img).centerCrop().into(imageView);
+
         imageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.alpha_splash));
 
         for (String one : mPermission) {
@@ -106,8 +116,8 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailed(String errorMsg) {
-                        SharedPreferencesUtil.putValue(getApplicationContext(),GlobalField.USER,"password","");
-                        startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+                        SharedPreferencesUtil.putValue(getApplicationContext(), GlobalField.USER, "password", "");
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                         finish();
                     }
                 });
@@ -118,9 +128,20 @@ public class SplashActivity extends AppCompatActivity {
     private void login(String account,String password,OnHttpCallBack<RetResult> callBack){
         RetrofitUtils.newInstance(GlobalField.url)
                 .create(HttpContract.class)
-                .login(account,password)
+                .login(IMEIUtil.getIMEI(this),account,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpObserver<RetResult>(callBack) {});
+    }
+
+    private boolean isDayTime(){
+        Calendar calendar=Calendar.getInstance(Locale.CHINA);
+        int hour=calendar.get(Calendar.HOUR_OF_DAY);
+        int minute=calendar.get(Calendar.MINUTE);
+        if (hour>6&&hour<18)
+            return true;
+        if (hour==6&&minute>=30)
+            return true;
+        return hour == 18 && minute <= 30;
     }
 }

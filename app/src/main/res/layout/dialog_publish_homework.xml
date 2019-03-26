@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_course"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:paddingStart="24dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/course_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:elevation="1dp"
+        app:textTint="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/homework_title"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:paddingStart="24dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <EditText
+        android:id="@+id/homework_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:imeOptions="actionDone"
+        android:paddingStart="24dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="6dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:elevation="1dp"
+        android:background="@drawable/qmui_edittext_bg_border_bottom"
+        android:textColor="?attr/qmui_config_color_black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/limit_time"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:paddingStart="24dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="6dp"
+        android:paddingBottom="6dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/qmui_edittext_bg_border_bottom"
+        android:textColor="?attr/qmui_config_color_black"
+        android:elevation="1dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/homework_content"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:paddingStart="24dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <EditText
+        android:id="@+id/homework_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="start"
+        android:imeOptions="actionDone"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="6dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:elevation="1dp"
+        android:background="@drawable/qmui_edittext_bg_border_bottom"
+        android:textColor="?attr/qmui_config_color_black"
+        android:textSize="16sp" />
+
+</LinearLayout>

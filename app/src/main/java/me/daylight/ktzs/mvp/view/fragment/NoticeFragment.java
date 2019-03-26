@@ -8,6 +8,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +17,10 @@ import butterknife.BindView;
 import me.daylight.ktzs.R;
 import me.daylight.ktzs.adapter.CommonAdapter;
 import me.daylight.ktzs.entity.CommonData;
+import me.daylight.ktzs.entity.Course;
 import me.daylight.ktzs.mvp.presenter.NoticePresenter;
 import me.daylight.ktzs.mvp.view.NoticeView;
+import me.daylight.ktzs.viewmodel.CourseViewModel;
 
 /**
  * @author Daylight
@@ -43,12 +46,13 @@ public class NoticeFragment extends BaseFragment<NoticePresenter> implements Not
 
     @Override
     protected void doAfterView() {
+        Course course= ViewModelProviders.of(getBaseFragmentActivity()).get(CourseViewModel.class).getCourse();
         topBar.setTitle(R.string.notice);
         topBar.addLeftBackImageButton().setOnClickListener(v -> popBackStack());
         refreshLayout.setColorSchemeResources(R.color.aqua,R.color.grass,R.color.grapefruit);
-        refreshLayout.setOnRefreshListener(()-> new Handler().postDelayed(()->getPresenter().swipeToRefresh(),1500));
+        refreshLayout.setOnRefreshListener(()-> new Handler().postDelayed(()->getPresenter().swipeToRefresh(course),1500));
         emptyView.show(true);
-        getPresenter().initNotices();
+        getPresenter().initNotices(course);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class NoticeFragment extends BaseFragment<NoticePresenter> implements Not
 
     @Override
     public void hideLoading() {
-        emptyView.hide();
+        new Handler().postDelayed(()->emptyView.hide(),1000);
     }
 
     @Override

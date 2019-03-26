@@ -25,4 +25,13 @@ public class NoticeModel extends BaseModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpObserver<>(callBack));
     }
+
+    public void getNoticesByCourse(Long courseId,OnHttpCallBack<RetResult<List<Notice>>> callBack){
+        RetrofitUtils.newInstance(GlobalField.url)
+                .create(HttpContract.class)
+                .getNoticesByCourse(courseId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpObserver<>(callBack));
+    }
 }

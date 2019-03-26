@@ -62,5 +62,7 @@ public class MainPresenter extends BasePresenter<MainView, MainModel> {
         });
     }
 
-
+    public void logout(){
+        getModel().logout();
+    }
 }

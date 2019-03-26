@@ -54,4 +54,12 @@ public class MainModel extends BaseModel {
                 .subscribe(new HttpObserver<RetResult<String>>(callBack) {});
     }
 
+    public void logout(){
+        RetrofitUtils.newInstance(GlobalField.url)
+                .create(HttpContract.class)
+                .logout()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe();
+    }
 }

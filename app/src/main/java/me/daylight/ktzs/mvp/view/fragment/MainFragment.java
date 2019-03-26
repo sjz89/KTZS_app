@@ -2,6 +2,7 @@ package me.daylight.ktzs.mvp.view.fragment;
 
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
@@ -49,7 +50,15 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
 
     @Override
     protected void popBackStack() {
-        getCurContext().moveTaskToBack(true);
+        QMUIDialog.MessageDialogBuilder builder=new QMUIDialog.MessageDialogBuilder(getCurContext());
+        builder.setMessage("确定要退出吗？")
+                .addAction("取消",((dialog, index) -> dialog.dismiss()))
+                .addAction("确定",((dialog, index) -> {
+                    dialog.dismiss();
+                    getPresenter().logout();
+                    super.popBackStack();
+                }))
+                .show();
     }
 
     @Override
@@ -100,7 +109,7 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
                 .addItemView(leave,v -> startFragment(new LeaveFragment()))
                 .addItemView(course,v -> startFragment(new CourseFragment()))
                 .addItemView(message,v -> startFragment(new NoticeFragment()))
-                .addItemView(homework,v -> {})
+                .addItemView(homework,v -> startFragment(new HomeworkListFragment()))
                 .addItemView(record,v -> startFragment(new RecordFragment()))
                 .addItemView(setting,v -> startFragment(new SettingFragment()))
                 .addTo(groupView);
@@ -108,8 +117,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
             QMUIGroupListView.newSection(getCurContext())
                     .addItemView(signIn,v -> getPresenter().getAttendanceNow())
                     .addItemView(course,v -> startFragment(new CourseFragment()))
-                    .addItemView(homework,v -> {})
-                    .addItemView(record,v -> {})
+                    .addItemView(homework,v -> startFragment(new HomeworkListFragment()))
+                    .addItemView(record,v -> startFragment(new TeacherRecordFragment()))
                     .addItemView(setting,v -> startFragment(new SettingFragment()))
                     .addTo(groupView);
     }
@@ -136,4 +145,6 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainVie
     public void toStartSignInFragment() {
         startFragment(new StartSignInFragment());
     }
+
+
 }

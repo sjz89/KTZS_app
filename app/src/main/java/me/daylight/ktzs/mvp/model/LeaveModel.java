@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.daylight.ktzs.entity.Course;
+import me.daylight.ktzs.entity.Leave;
 import me.daylight.ktzs.http.HttpContract;
 import me.daylight.ktzs.http.HttpObserver;
 import me.daylight.ktzs.http.OnHttpCallBack;
@@ -17,19 +18,19 @@ import me.daylight.ktzs.utils.GlobalField;
  * @date 2019/03/16 21:52
  */
 public class LeaveModel extends BaseModel {
-    public void initCourseList(OnHttpCallBack<RetResult<List<Course>>> callBack){
+    public void submit(Long startDate,Long endDate,String reason,OnHttpCallBack<RetResult> callBack){
         RetrofitUtils.newInstance(GlobalField.url)
                 .create(HttpContract.class)
-                .getMyCourses(null)
+                .submitLeaveNote(startDate,endDate, reason)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new HttpObserver<RetResult<List<Course>>>(callBack) {});
+                .subscribe(new HttpObserver<>(callBack));
     }
 
-    public void submit(Long courseId,String reason,OnHttpCallBack<RetResult> callBack){
+    public void initLeaveRecordList(OnHttpCallBack<RetResult<List<Leave>>> callBack){
         RetrofitUtils.newInstance(GlobalField.url)
                 .create(HttpContract.class)
-                .submitLeaveNote(courseId, reason)
+                .getMyLeaveRecord()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpObserver<>(callBack));

@@ -10,6 +10,7 @@ import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -55,7 +56,7 @@ public class CourseFragment extends BaseFragment<CoursePresenter> implements Cou
 
     @Override
     public void addItems(List<Course> courses) {
-        Map<String,QMUIGroupListView.Section> sections=new HashMap<>();
+        Map<String,QMUIGroupListView.Section> sections=new LinkedHashMap<>();
         for (Course course:courses) {
             switch (course.getTime().split(" ")[0]){
                 case "01":
