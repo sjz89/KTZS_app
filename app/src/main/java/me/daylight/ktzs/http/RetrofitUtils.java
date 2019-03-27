@@ -20,6 +20,8 @@ public class RetrofitUtils {
         OkHttpClient client=builder.addInterceptor(new HeadInterceptor())
                 .addInterceptor(new ReceivedCookiesInterceptor())
                 .addInterceptor(new AddCookiesInterceptor())
+                .writeTimeout(10,TimeUnit.SECONDS)
+                .readTimeout(10,TimeUnit.SECONDS)
                 .connectTimeout(8, TimeUnit.SECONDS)
                 .build();
 

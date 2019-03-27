@@ -59,6 +59,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
+        if ("".equals(SharedPreferencesUtil.getString(this,GlobalField.SETTING,GlobalField.URL)))
+            SharedPreferencesUtil.putValue(this,GlobalField.SETTING,GlobalField.URL,"47.102.129.149");
+
         if (isDayTime())
             GlideApp.with(this).load(R.mipmap.good_morning_img).centerCrop().into(imageView);
         else
@@ -123,6 +126,13 @@ public class SplashActivity extends AppCompatActivity {
                 });
             }
         },2000);
+        new Handler().postDelayed(()->{
+            if (!this.isFinishing()) {
+                SharedPreferencesUtil.putValue(getApplicationContext(), GlobalField.USER, "password", "");
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                finish();
+            }
+        },8000);
     }
 
     private void login(String account,String password,OnHttpCallBack<RetResult> callBack){
@@ -131,7 +141,7 @@ public class SplashActivity extends AppCompatActivity {
                 .login(IMEIUtil.getIMEI(this),account,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new HttpObserver<RetResult>(callBack) {});
+                .subscribe(new HttpObserver<RetResult>(callBack));
     }
 
     private boolean isDayTime(){
