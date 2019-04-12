@@ -60,7 +60,7 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         if ("".equals(SharedPreferencesUtil.getString(this,GlobalField.SETTING,GlobalField.URL)))
-            SharedPreferencesUtil.putValue(this,GlobalField.SETTING,GlobalField.URL,"47.102.129.149");
+            SharedPreferencesUtil.putValue(this,GlobalField.SETTING,GlobalField.URL,"https://ktzs.suazen.com");
 
         if (isDayTime())
             GlideApp.with(this).load(R.mipmap.good_morning_img).centerCrop().into(imageView);
@@ -95,6 +95,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PERMISSION_REQ) {
             if (resultCode == 0) {
                 this.finish();

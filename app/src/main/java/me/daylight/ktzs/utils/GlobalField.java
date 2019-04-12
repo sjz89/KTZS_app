@@ -3,7 +3,7 @@ package me.daylight.ktzs.utils;
 import me.daylight.ktzs.app.KTZSApp;
 
 public class GlobalField {
-    public static String url="http://"+SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(),
+    public static String url=SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(),
             GlobalField.SETTING,GlobalField.URL)+"/";
     public static final String USER="User";
     public static final String SETTING="Setting";

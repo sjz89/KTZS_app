@@ -53,8 +53,10 @@ public class WsManager extends WebSocketListener {
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .build();
-        String url="ws://"+ SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(),
-                GlobalField.SETTING,GlobalField.URL)+(channel.equals(Channel_SignInCount)?":8080/webSocket/":"/webSocket/")+channel+"/"+idNumber;
+        String baseUrl=SharedPreferencesUtil.getString(KTZSApp.getApplication().getApplicationContext(), GlobalField.SETTING,GlobalField.URL);
+        String url=(baseUrl.startsWith("https")?"wss://":"ws://")+baseUrl.split("//")[1]+"/webSocket/"+channel+"/"+idNumber;
+        if (channel.equals(Channel_SignInCount))
+            url="ws://47.102.129.149:8080/webSocket/"+channel+"/"+idNumber;
         Request request = new Request.Builder()
                 .url(url)
                 .build();

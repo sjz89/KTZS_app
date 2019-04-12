@@ -113,7 +113,7 @@ public class LoginFragment extends BaseFragment<LoginPresenter> implements Login
                 .addAction("确定",((dialog, index) -> {
                     SharedPreferencesUtil.putValue(getCurContext(),
                             GlobalField.SETTING,GlobalField.URL,builder.getEditText().getText().toString());
-                    GlobalField.url="http://"+builder.getEditText().getText().toString()+"/";
+                    GlobalField.url=builder.getEditText().getText().toString()+"/";
                     dialog.dismiss();
                 }))
                 .show();
